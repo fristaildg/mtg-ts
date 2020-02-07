@@ -1,0 +1,15 @@
+body,
+html,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+$textTagList: 'h1', 'h2', 'h3', 'h4', 'p';
+@each $tag in $textTagList {
+  #{$tag} {
+    margin: 0;
+  }
+}
