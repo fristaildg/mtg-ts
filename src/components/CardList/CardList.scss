@@ -11,10 +11,26 @@
     box-sizing: border-box;
     transform: scale(1);
     transition: transform 0.2s ease-in-out;
+    position: relative;
+
+    .item-button-wrapper {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     &:hover {
-      cursor: pointer;
+      // cursor: pointer;
       transform: scale(1.1);
+
+      .item-button-wrapper {
+        opacity: 1;
+        pointer-events: auto;
+      }
     }
   }
 }

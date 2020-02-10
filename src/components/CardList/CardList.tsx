@@ -6,14 +6,15 @@ import CardDetail from '../CardDetail'
 import './CardList.scss'
 
 interface CardListProps {
-  cardList: Card[]
+  cardList: Card[],
+  onAddCard: (card: Card) => void
 }
 
-const CardList: React.FC<CardListProps> = ({cardList}) => {
+const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
   const [showDetail, setShowDetail] = useState(false)
   const [currentCard, setCurrentCard] = useState(cardList[0])
 
-  const handleCardClick = (card: Card) => {
+  const handleViewCardClick = (card: Card) => {
     setCurrentCard(card)
     setShowDetail(true)
   }
@@ -43,6 +44,10 @@ const CardList: React.FC<CardListProps> = ({cardList}) => {
     setCurrentCard(cardList[newIndex])
   }
 
+  const handleAddCardClick = (card: Card) => {
+    onAddCard(card)
+  }
+
   return (
     <React.Fragment>
       <ul className='card-list'>
@@ -51,11 +56,19 @@ const CardList: React.FC<CardListProps> = ({cardList}) => {
             className='card-list-item'
             key={card.id}
           >
-            <CardItem card={card}
-              onCardClick={() => {
-                handleCardClick(card)
-              }}
-            />          
+            <div className="item-button-wrapper">
+              <button onClick={() => {
+                handleViewCardClick(card)
+              }}>
+                view
+              </button>
+              <button onClick={() => {
+                handleAddCardClick(card)
+              }}>
+                add
+              </button>
+            </div>
+            <CardItem card={card} />                 
           </li>
         ))}
       </ul>

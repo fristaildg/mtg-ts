@@ -1,0 +1,25 @@
+.deck {
+    .listing {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        .listing-item {
+            border: 1px solid white;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+
+            .listing-item-amount {
+                width: 50px;
+                text-align: center;
+            }
+
+            &:hover {
+                background-color: rgba(white, 0.2);
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.deck-builder-page {
+    display: grid;
+    grid-template-areas:    'pageHeader  pageHeader'
+                            'cardList    deck';
+    grid-template-columns: 2fr 1fr;
+    // grid-template-rows: 250px auto;
+    height: 100%;
+
+    > h2 {
+        grid-area: pageHeader;
+    }
+
+    .card-list-wrapper {
+        grid-area: cardList;
+        max-height: 100%;
+        overflow: auto;
+    }
+
+    .deck-wrapper {
+        grid-area: deck;
+    }
+}
