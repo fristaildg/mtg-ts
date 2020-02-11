@@ -1,6 +1,6 @@
 .deck-builder-page {
     display: grid;
-    grid-template-areas:    'pageHeader  pageHeader'
+    grid-template-areas:    'pageHeader  deckHeader'
                             'cardList    deck';
     grid-template-columns: 2fr 1fr;
     // grid-template-rows: 250px auto;
@@ -8,6 +8,10 @@
 
     > h2 {
         grid-area: pageHeader;
+    }
+
+    .deck-header {
+        grid-area: deckHeader;
     }
 
     .card-list-wrapper {

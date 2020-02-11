@@ -5,6 +5,7 @@ import { Card } from '../../store/cardList/types'
 import { ListingItem } from '../../store/deckList/types'
 import CardList from '../CardList'
 import Deck from '../Deck'
+import DeckHeader from '../DeckHeader'
 
 import './DeckBuilderPage.scss'
 
@@ -74,6 +75,9 @@ const DeckBuilderPage: React.FC = () => {
       <div className="card-list-wrapper">
         {isLoading ? <p>Loading cards...</p> : <CardList cardList={cardList} onAddCard={handleAddToDeck} />}
       </div>
+      <DeckHeader
+        listing={listing}
+      />
       <div className="deck-wrapper">
         <Deck
           listing={listing}

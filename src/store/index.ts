@@ -3,8 +3,12 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import CardListReducer from './cardList/reducers'
+import DeckListReducer from './deckList/reducers'
 
-const rootReducer = combineReducers({CardListReducer})
+const rootReducer = combineReducers({
+  CardListReducer,
+  DeckListReducer
+})
 
 export type AppState = ReturnType<typeof rootReducer>
 

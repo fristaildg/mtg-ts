@@ -14,6 +14,11 @@ const LeftMenu: React.FC = () => {
         }}>
           Deck builder
         </li>
+        <li onClick={() => {
+          history.push('/dashboard/my-decks')
+        }}>
+          My decks
+        </li>
       </ul>
     </div>
   )
