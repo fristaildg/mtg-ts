@@ -16,15 +16,13 @@ const CardDetail: React.FC<CardDetailProps> = ({cardInfo, onCloseClick, onNextCl
     mana_cost,
     colors,
     set_name,
-    image_uris: {
-      png
-    }
+    image_uris
   } = cardInfo
 
   return (
     <div className="card-detail">
       <img
-        src={png}
+        src={image_uris && image_uris.png}
         alt={name}
         className="card-detail-image"
       />

@@ -16,6 +16,7 @@ const DashboardPage: React.FC = () => (
     <LeftMenu />
     <main>
       <Switch>
+        <Route path='/dashboard/my-decks/:deckId' component={DeckBuilderPage} />
         <Route path='/dashboard/my-decks' component={DecksPage} />
         <Route path='/dashboard/build-deck' component={DeckBuilderPage} />
         <Route path='/dashboard' component={Dashboard} />

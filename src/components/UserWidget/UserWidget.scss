@@ -1,0 +1,20 @@
+.user-widget {
+  // padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: gray;
+
+  .user-widget-name, 
+  .user-widget-logout {
+    padding: 20px;
+  }
+
+  .user-widget-logout {
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(gray, 10%);
+    }
+  }
+}

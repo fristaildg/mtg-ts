@@ -1,27 +1,65 @@
-import React, { useState } from 'react'
-import { saveDeck } from '../../store/deckList/actions'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { saveDeck, updateDeck, deleteDeck } from '../../store/deckList/actions'
+import { useDispatch, useSelector } from 'react-redux'
 import { ListingItem } from '../../store/deckList/types'
-import _ from 'lodash'
+import { useHistory } from 'react-router-dom'
+// import _ from 'lodash'
 
 interface DeckHeaderProps {
-  listing: ListingItem[]
+  deck: {
+    listing: ListingItem[]
+    _id?: string
+    name?: string
+  }
 }
 
-const DeckHeader: React.FC<DeckHeaderProps> = ({listing}) => {
+interface RootState {
+  PendingState: {
+    DELETE_DECK: {
+      isLoading: boolean
+    }
+  }
+}
+
+const DeckHeader: React.FC<DeckHeaderProps> = ({deck}) => {
   const [deckName, setDeckName] = useState('')
   const dispatch = useDispatch()
+  const history = useHistory()
+  const deleteStatus = useSelector((state: RootState) => state.PendingState.DELETE_DECK)
+
+  useEffect(() => {
+    if (deck.name) {
+      setDeckName(deck.name)
+    }
+  }, [deck.name])
+
+  useEffect(() => {
+    if (deleteStatus && !deleteStatus.isLoading) {
+      history.push('/dashboard/my-decks')
+    }
+  }, [deleteStatus, history])
+
+  const handleDeleteDeck = () => {
+    dispatch(deleteDeck(deck._id!))
+  }
 
   return (
     <div className="deck-header">
       <form onSubmit={(event) => {
         event.preventDefault()
         const deckObj = {
-          _id: _.uniqueId('deck_'),
           name: deckName,
-          listing
+          listing: deck.listing
         }
-        dispatch(saveDeck(deckObj))
+
+        if (!deck._id) {
+          dispatch(saveDeck(deckObj))
+        } else {
+          dispatch(updateDeck({
+            ...deckObj,
+            _id: deck._id
+          }))
+        }
       }}>
         <input
           type="text"
@@ -32,7 +70,14 @@ const DeckHeader: React.FC<DeckHeaderProps> = ({listing}) => {
           }}
         />
         <button type='submit'>Save</button>
-        <button>Delete</button>
+        {deck._id && (
+          <button onClick={(event) => {
+            event.preventDefault()
+            handleDeleteDeck()
+          }}>
+            Delete
+          </button>
+        )}
       </form>
     </div>
   )

@@ -2,39 +2,71 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCards } from '../../store/cardList/actions'
 import { Card } from '../../store/cardList/types'
-import { ListingItem } from '../../store/deckList/types'
+import { ListingItem, DeckWithId } from '../../store/deckList/types'
 import CardList from '../CardList'
 import Deck from '../Deck'
 import DeckHeader from '../DeckHeader'
+import { useParams } from 'react-router-dom'
 
 import './DeckBuilderPage.scss'
+import { getDeckById, clearDeck } from '../../store/deckList/actions'
 
 interface RootState {
+  PendingState: {
+    FETCH_CARDS: {
+      isLoading: boolean
+    },
+    FETCH_DECK: {
+      isLoading: boolean
+    }
+  }
   CardListReducer: {
     cardList: Card[],
+    isLoading: boolean
+  }
+  DeckListReducer: {
+    deck: DeckWithId,
     isLoading: boolean
   }
 }
 
 type Listing = ListingItem[] | []
 
-
 const DeckBuilderPage: React.FC = () => {
   const cardList = useSelector((state: RootState) => state.CardListReducer.cardList)
-  const isLoading = useSelector((state: RootState) => state.CardListReducer.isLoading)
+  const deck = useSelector((state: RootState) => state.DeckListReducer.deck)
+  const fetchCardsStatus = useSelector((state: RootState) => state.PendingState.FETCH_CARDS)
+  const fetchDeckStatus = useSelector((state: RootState) => state.PendingState.FETCH_DECK)
   const dispatch = useDispatch()
+  const { deckId } = useParams()
 
   const [listing, setListing] = useState<Listing>([])
+  const [deckName, setDeckName] = useState('')
 
   useEffect(() => {
+    if (deckId) {
+      dispatch(getDeckById(deckId))
+    }
     dispatch(fetchCards())
-  }, [dispatch])
+
+    return () => {
+      dispatch(clearDeck())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (deck) {
+      setListing(deck.listing)
+      setDeckName(deck.name)
+    }    
+  }, [deck])
 
   const handleAddToDeck = (card: Card) => {
     const newCard = {
       name: card.name,
       id: card.id,
-      amount: 1
+      amount: 1,
+      type: card.type_line
     }
 
     const listingIds = (listing as ListingItem[]).map((item: ListingItem) => item.id)
@@ -44,7 +76,7 @@ const DeckBuilderPage: React.FC = () => {
       const newListing = [...listing]
       const newCopy = listing[matchingCardIndex]
       
-      newCopy.amount = newCopy.amount < 4 ? newCopy.amount + 1 : 4
+      newCopy.amount = (newCopy.amount < 4 || newCopy.type.indexOf('Basic Land') !== -1) ? newCopy.amount + 1 : 4
       newListing[matchingCardIndex] = newCopy
 
       setListing(newListing)
@@ -73,17 +105,27 @@ const DeckBuilderPage: React.FC = () => {
     <div className='deck-builder-page'>
       <h2>Deck Builder</h2>
       <div className="card-list-wrapper">
-        {isLoading ? <p>Loading cards...</p> : <CardList cardList={cardList} onAddCard={handleAddToDeck} />}
+        {fetchCardsStatus && fetchCardsStatus.isLoading ? <p>Loading cards...</p> : <CardList cardList={cardList} onAddCard={handleAddToDeck} />}
       </div>
-      <DeckHeader
-        listing={listing}
-      />
-      <div className="deck-wrapper">
-        <Deck
-          listing={listing}
-          onRemoveCard={handleRemoveFromDeck}
-        />
-      </div>
+      {fetchDeckStatus && fetchDeckStatus.isLoading && !deck ? (
+        <p>Loading deck...</p>
+      ) : (
+        <React.Fragment>
+          <DeckHeader
+            deck={{
+              listing,
+              name: deckName,
+              _id: deckId
+            }}
+          />
+          <div className="deck-wrapper">
+            <Deck
+              listing={listing}
+              onRemoveCard={handleRemoveFromDeck}
+            />
+          </div>
+        </React.Fragment>
+      )}
     </div>
   )
 }

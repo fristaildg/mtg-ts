@@ -1,35 +1,19 @@
 import {
-  CardListState,
-  FETCH_CARDS_SUCCESS,
-  FETCH_CARDS_PENDING
+  FETCH_CARDS
 } from './types'
 
-const fetchCardsSuccess = (cardList: CardListState) => {
-  return {
-    type: FETCH_CARDS_SUCCESS,
-    payload: cardList
-  }
-}
-
-const fetchCardsPending = (bool: boolean) => {
-  return {
-    type: FETCH_CARDS_PENDING,
-    payload: bool
-  }
-}
+import { asyncActionCreator } from '../asyncActionCreator'
+import { SUCCESS, PENDING, REJECTED } from '../../lib/apiCall.types'
+import { mtgApiCall } from '../../lib/apiCall'
 
 export const fetchCards = () => {
   return async (dispatch: any) => {
-    dispatch(fetchCardsPending(true))
+    dispatch(asyncActionCreator(FETCH_CARDS, PENDING))
     try {
-      const response = await fetch('https://api.scryfall.com/cards')
-      const cardList = await response.json()  
-      dispatch(fetchCardsSuccess({
-        cardList: cardList.data,
-        nextPage: cardList.next_page
-      }))
-    } finally {
-      dispatch(fetchCardsPending(false))
+      const response = await mtgApiCall('cards')
+      dispatch(asyncActionCreator(FETCH_CARDS, SUCCESS, response))
+    } catch (err) {
+      dispatch(asyncActionCreator(FETCH_CARDS, REJECTED, err))
     }
   }
 }

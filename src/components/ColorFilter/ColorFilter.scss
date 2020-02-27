@@ -1,0 +1,25 @@
+.color-filter {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: space-around;
+
+  .color-filter-item {
+    > img {
+      width: 30px;
+      display: inline-block;
+      filter: grayscale(1);
+      cursor: pointer;
+
+      &:hover {
+        filter: grayscale(0.5);
+      }
+    }
+
+    &.selected {
+      > img {
+        filter: grayscale(0);
+      }
+    }
+  }
+}

@@ -1,25 +1,19 @@
 import {
   CardListState,
-  FETCH_CARDS_SUCCESS,
-  FETCH_CARDS_PENDING,
+  FETCH_CARDS,
   CardListActionTypes
 } from './types'
 
 const initialState: CardListState = {
-  cardList: []  
+  cardList: []
 }
 
 export default (state = initialState, action: CardListActionTypes) => {
   switch (action.type) {
-    case FETCH_CARDS_PENDING:
+    case `${FETCH_CARDS}_SUCCESS`:
       return {
         ...state,
-        isLoading: action.payload
-      }
-    case FETCH_CARDS_SUCCESS:
-      return {
-        ...state,
-        ...action.payload
+        cardList: action.payload.data
       }
     default: 
       return state

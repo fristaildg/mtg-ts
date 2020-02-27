@@ -4,10 +4,16 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import CardListReducer from './cardList/reducers'
 import DeckListReducer from './deckList/reducers'
+import UserReducer from './user/reducers'
+import SymbologyReducer from './symbology/reducers'
+import { pendingReducer } from "./asyncActionCreator";
 
 const rootReducer = combineReducers({
+  PendingState: pendingReducer,
   CardListReducer,
-  DeckListReducer
+  DeckListReducer,
+  UserReducer,
+  SymbologyReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

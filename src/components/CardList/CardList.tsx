@@ -4,6 +4,7 @@ import CardItem from '../CardItem'
 import CardDetail from '../CardDetail'
 
 import './CardList.scss'
+import CardListFilters from '../CardListFilters'
 
 interface CardListProps {
   cardList: Card[],
@@ -50,6 +51,7 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
 
   return (
     <React.Fragment>
+      <CardListFilters />
       <ul className='card-list'>
         {cardList.map(card => (
           <li
