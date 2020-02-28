@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 
 if (process.env.NODE_ENV === 'production') {
   API_ROOT = 'https://glacial-eyrie-05457.herokuapp.com/api/v1'
-  APP_ROOT = 'https://damp-badlands-60145.herokuapp.com'
+  APP_ROOT = 'https://ancient-shore-51765.herokuapp.com/'
 }
 
 const MTG_SRC_ROOT = 'https://api.scryfall.com'
