@@ -9,6 +9,7 @@ import { getLoggedUser } from './store/user/actions'
 import LoadingOverlay from './components/LoadingOverlay';
 
 const App: React.FC = () => {
+  console.log(process.env)
   const dispatch = useDispatch()
   
   useEffect(() => {
