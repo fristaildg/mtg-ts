@@ -10,15 +10,18 @@
       display: inline-block;
       filter: grayscale(1);
       cursor: pointer;
+      opacity: 0.4;
 
       &:hover {
         filter: grayscale(0.5);
+        opacity: 1;
       }
     }
 
     &.selected {
       > img {
         filter: grayscale(0);
+        opacity: 1;
       }
     }
   }

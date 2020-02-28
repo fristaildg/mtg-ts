@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchColors } from '../../store/symbology/actions'
 import { RootState, ColorFilterProps } from './types'

@@ -11,8 +11,9 @@ import {
 } from './apiCall.types'
 import {
   setUserToken
- } from './userToken'
- import { API_ROOT, MTG_SRC_ROOT } from '../config/appConfig'
+} from './userToken'
+import { API_ROOT, MTG_SRC_ROOT } from '../config/appConfig'
+import _ from 'lodash'
 
 export const apiCall = async (endpoint: RequestInfo, method: Method, body?: Body, newToken?: string) => {
   let token
@@ -65,7 +66,14 @@ export const sessionApiCall = async (sessionType: Session, credentials: Body) =>
 
 export const mtgApiCall = async (endpoint: RequestInfo, queryObj?: MtgQueryObj) => {
   try {
-    const response = await fetch(`${MTG_SRC_ROOT}/${endpoint}`)
+    let response: Response
+    if (queryObj && !_.isEmpty(queryObj)) {
+      const queryString = Object.keys(queryObj).map(key => `${key}:${queryObj[key]}`).join('+')
+      response = await fetch(`${MTG_SRC_ROOT}/${endpoint}/search?q=${queryString}`)
+    } else {
+      response = await fetch(`${MTG_SRC_ROOT}/${endpoint}`)
+    }
+
 
     return await response.json()
   } catch (err) {
