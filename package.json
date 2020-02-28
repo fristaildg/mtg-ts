@@ -31,7 +31,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "create-react-component-folder": "^0.1.30"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,9 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {        
-    "create-react-component-folder": "^0.1.30"
   },
   "crcf": [
     "scss",
