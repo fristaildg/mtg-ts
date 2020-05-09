@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import ColorFilter from '../ColorFilter'
-import './CardListFilters.scss'
-import { useDispatch } from 'react-redux'
-import _ from 'lodash'
-import { fetchCards } from '../../store/cardList/actions'
-import TypeFilter from '../TypeFilter'
+import React from "react"
+import ColorFilter from "../ColorFilter"
+import "./CardListFilters.scss"
+import TypeFilter from "../TypeFilter"
+import NameFilter from "../NameFilter"
 
 const CardListFilters = () => {
-  const [queryObj, setQueryObj] = useState({})
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (!_.isEmpty(queryObj)) {
-      dispatch(fetchCards(queryObj))
-    }
-  }, [queryObj])
-
-  const handleColorChange = (colorQuery: string) => {
-    setQueryObj(prevQueryObj => ({...prevQueryObj, 'c': colorQuery}))
-  }
-
-  const handleTypeChange = (typeQuery: string) => {
-    setQueryObj(prevQueryObj => ({...prevQueryObj, 't': typeQuery}))
-  }
-
   return (
     <React.Fragment>
-      <ColorFilter
-        onColorChange={handleColorChange}
-      />
-      <TypeFilter
-        onTypeChange={handleTypeChange}
-      />
+      <p>Filter by color:</p>
+      <ColorFilter />
+      <p>Filter by type:</p>
+      <TypeFilter />
+      <p>Filter by name:</p>
+      <NameFilter />
     </React.Fragment>
   )
 }
 
 export default CardListFilters
-  

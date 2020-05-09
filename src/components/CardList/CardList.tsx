@@ -1,19 +1,39 @@
-import React, { useState } from 'react'
-import { Card } from '../../store/cardList/types'
-import CardItem from '../CardItem'
+import React, { useState, useEffect } from 'react'
+import { Card, Filter } from '../../store/cardList/types'
 import CardDetail from '../CardDetail'
 
 import './CardList.scss'
 import CardListFilters from '../CardListFilters'
+import CardListNav from '../CardListNav'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchCards } from '../../store/cardList/actions'
+import CardListItem from '../CardListItem'
+import _ from 'lodash'
 
 interface CardListProps {
   cardList: Card[],
   onAddCard: (card: Card) => void
 }
 
+interface RootState {
+  CardListReducer: {
+    currentPage: number,
+    filters: Filter
+  }
+}
+
 const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
+  const dispatch = useDispatch()
+  const currentPage = useSelector((state: RootState) => state.CardListReducer.currentPage)
+  const queryObj = useSelector((state: RootState) => state.CardListReducer.filters)
   const [showDetail, setShowDetail] = useState(false)
   const [currentCard, setCurrentCard] = useState(cardList[0])
+
+  useEffect(() => {
+    if (!_.isEmpty(queryObj)) {
+      dispatch(fetchCards(queryObj, currentPage))
+    }
+  }, [dispatch, currentPage, queryObj])
 
   const handleViewCardClick = (card: Card) => {
     setCurrentCard(card)
@@ -24,7 +44,7 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
     setShowDetail(false)
   }
 
-  const handlePrevClick = () => {
+  const handlePrevCardClick = () => {
     const currentIndex = cardList.findIndex(card => currentCard.id === card.id)
     const newIndex = currentIndex - 1
 
@@ -35,7 +55,7 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
     setCurrentCard(cardList[newIndex])
   }
 
-  const handleNextClick = () => {
+  const handleNextCardClick = () => {
     const currentIndex = cardList.findIndex(card => currentCard.id === card.id)
     const newIndex = currentIndex + 1
 
@@ -54,33 +74,22 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
       <CardListFilters />
       <ul className='card-list'>
         {cardList.map(card => (
-          <li
-            className='card-list-item'
+          <CardListItem
             key={card.id}
-          >
-            <div className="item-button-wrapper">
-              <button onClick={() => {
-                handleViewCardClick(card)
-              }}>
-                view
-              </button>
-              <button onClick={() => {
-                handleAddCardClick(card)
-              }}>
-                add
-              </button>
-            </div>
-            <CardItem card={card} />                 
-          </li>
+            card={card}
+            onViewCard={handleViewCardClick}
+            onAddCard={handleAddCardClick}
+          />
         ))}
       </ul>
       {showDetail && (
         <CardDetail cardInfo={currentCard}
           onCloseClick={handleCloseClick}
-          onPrevClick={handlePrevClick}
-          onNextClick={handleNextClick}
+          onPrevClick={handlePrevCardClick}
+          onNextClick={handleNextCardClick}
         />
       )}
+      <CardListNav />
     </React.Fragment>
   )
 }

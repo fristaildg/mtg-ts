@@ -1,4 +1,4 @@
-import { Deck, DeckWithId, SAVE_DECK, UPDATE_DECK, FETCH_DECKS, FETCH_DECK, DELETE_DECK, CLEAR_DECK } from './types'
+import { Deck, DeckWithId, SAVE_DECK, UPDATE_DECK, FETCH_DECKS, FETCH_DECK, DELETE_DECK, CLEAR_DECK, SELECT_DECK } from './types'
 import { apiCall } from '../../lib/apiCall'
 import { GET, POST, PUT, DELETE, PENDING, SUCCESS, REJECTED, CLEAR } from '../../lib/apiCall.types'
 import { asyncActionCreator } from '../asyncActionCreator'
@@ -71,6 +71,15 @@ export const clearDeck = () => {
     return (dispatch: any) => {
         dispatch({
             type: CLEAR_DECK
+        })
+    }
+}
+
+export const selectDeck = (deckId: string) => {
+    return (dispatch: any) => {
+        dispatch({
+            type: SELECT_DECK,
+            payload: deckId
         })
     }
 }

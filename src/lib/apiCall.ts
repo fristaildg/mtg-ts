@@ -7,52 +7,55 @@ import {
   Config,
   LOGIN,
   REGISTER,
-  MtgQueryObj
-} from './apiCall.types'
-import {
-  setUserToken
-} from './userToken'
-import { API_ROOT, MTG_SRC_ROOT } from '../config/appConfig'
-import _ from 'lodash'
+  MtgQueryObj,
+} from "./apiCall.types"
+import { setUserToken } from "./userToken"
+import { API_ROOT, MTG_SRC_ROOT } from "../config/appConfig"
+import _ from "lodash"
 
-export const apiCall = async (endpoint: RequestInfo, method: Method, body?: Body, newToken?: string) => {
+export const apiCall = async (
+  endpoint: RequestInfo,
+  method: Method,
+  body?: Body,
+  newToken?: string
+) => {
   let token
 
   if (!newToken) {
-    token = localStorage.getItem('userToken')
+    token = localStorage.getItem("userToken")
   } else {
     token = newToken
   }
 
   const headers = new Headers()
-  headers.set('Content-Type', 'application/json')
-  headers.set('Authorization', `Bearer ${token}`)
+  headers.set("Content-Type", "application/json")
+  headers.set("Authorization", `Bearer ${token}`)
 
   const config: Config = {
     method,
-    headers
+    headers,
   }
 
   if (method === POST || method === PUT) {
     config.body = JSON.stringify(body)
   }
 
-  const response = await fetch(
-    `${API_ROOT}/${endpoint}`,
-    config
-  )
+  const response = await fetch(`${API_ROOT}/${endpoint}`, config)
 
   return await response.json()
 }
 
-export const sessionApiCall = async (sessionType: Session, credentials: Body) => {
+export const sessionApiCall = async (
+  sessionType: Session,
+  credentials: Body
+) => {
   try {
-    let endpoint = ''
-    
+    let endpoint = ""
+
     if (sessionType === LOGIN) {
-      endpoint = 'auth/login'
+      endpoint = "auth/login"
     } else if (sessionType === REGISTER) {
-      endpoint = 'auth/register'
+      endpoint = "auth/register"
     }
 
     const response = await apiCall(endpoint, POST, credentials)
@@ -64,16 +67,33 @@ export const sessionApiCall = async (sessionType: Session, credentials: Body) =>
   }
 }
 
-export const mtgApiCall = async (endpoint: RequestInfo, queryObj?: MtgQueryObj) => {
+export const mtgApiCall = async (
+  endpoint: RequestInfo,
+  queryObj?: MtgQueryObj,
+  page?: number
+) => {
   try {
     let response: Response
+    console.log(queryObj)
     if (queryObj && !_.isEmpty(queryObj)) {
-      const queryString = Object.keys(queryObj).map(key => `${key}:${queryObj[key]}`).join('+')
-      response = await fetch(`${MTG_SRC_ROOT}/${endpoint}/search?q=${queryString}`)
+      if (queryObj.name) {
+        response = await fetch(
+          `${MTG_SRC_ROOT}/${endpoint}/search?q=${queryObj.name}&order=cmc&page=${page ||
+          1}`
+        )
+      } else {
+        const queryString = Object.keys(queryObj)
+          .filter(key => key !== 'name' && key !== 'page')
+          .map((key) => `${key}:${queryObj[key]}`)
+          .join("+")
+        response = await fetch(
+          `${MTG_SRC_ROOT}/${endpoint}/search?q=${queryString}&order=cmc&page=${page ||
+          1}`
+        )
+      }
     } else {
       response = await fetch(`${MTG_SRC_ROOT}/${endpoint}`)
     }
-
 
     return await response.json()
   } catch (err) {

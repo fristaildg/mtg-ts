@@ -17,6 +17,7 @@ export interface DeckWithId extends Deck {
 export interface DeckListState {
     deckList: DeckWithId[],
     count: number,
+    [key: string]: any
     // deck: Deck | {}
 }
 
@@ -26,6 +27,7 @@ export const DELETE_DECK = 'DELETE_DECK'
 export const SAVE_DECK = 'SAVE_DECK'
 export const UPDATE_DECK = 'UPDATE_DECK'
 export const CLEAR_DECK = 'CLEAR_DECK'
+export const SELECT_DECK = 'SELECT_DECK'
 
 interface FetchDecksAction {
     type: typeof FETCH_DECKS
@@ -57,4 +59,9 @@ interface ClearDeckAction {
     payload: any
 }
 
-export type DeckListActionTypes = FetchDecksAction | SaveDeckAction | FetchDeckAction | UpdateDeckAction | DeleteDeckAction | ClearDeckAction
+interface SelectDeckAction {
+    type: typeof SELECT_DECK
+    payload: string
+}
+
+export type DeckListActionTypes = FetchDecksAction | SaveDeckAction | FetchDeckAction | UpdateDeckAction | DeleteDeckAction | ClearDeckAction | SelectDeckAction

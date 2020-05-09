@@ -1,3 +1,3 @@
 export interface TypeFilterProps {
-  onTypeChange: (type: string) => void
+  // onTypeChange: (type: string) => void
 }

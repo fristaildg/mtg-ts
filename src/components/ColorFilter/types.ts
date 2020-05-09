@@ -7,5 +7,5 @@ export interface RootState {
 }
 
 export interface ColorFilterProps {
-  onColorChange: (colorQuery: string) => void
+  // onColorChange: (colorQuery: string) => void
 }

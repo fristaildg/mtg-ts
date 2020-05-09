@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCards } from '../../store/cardList/actions'
 import { Card } from '../../store/cardList/types'
 import { ListingItem, DeckWithId } from '../../store/deckList/types'
 import CardList from '../CardList'

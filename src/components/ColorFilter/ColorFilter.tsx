@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchColors } from '../../store/symbology/actions'
 import { RootState, ColorFilterProps } from './types'
@@ -6,8 +6,9 @@ import { Symbol } from '../../store/symbology/types'
 import classNames from 'classnames'
 
 import './ColorFilter.scss'
+import { setFilter } from '../../store/cardList/actions'
 
-const ColorFilter: React.FC<ColorFilterProps> = ({onColorChange}) => {
+const ColorFilter: React.FC<ColorFilterProps> = () => {
   const dispatch = useDispatch()
   const colorList = useSelector((state: RootState) => state.SymbologyReducer.colorList)
 
@@ -15,11 +16,11 @@ const ColorFilter: React.FC<ColorFilterProps> = ({onColorChange}) => {
 
   useEffect(() => {
     dispatch(fetchColors())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
-    onColorChange(colorQuery)
-  }, [colorQuery])
+    dispatch(setFilter({'c': colorQuery}))
+  }, [dispatch, colorQuery])
 
   const isSelected = (color: Symbol) => colorQuery.indexOf(color.loose_variant) !== -1
 

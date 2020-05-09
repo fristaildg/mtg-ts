@@ -15,6 +15,11 @@ const LeftMenu: React.FC = () => {
         }}>
           My decks
         </li>
+        <li onClick={() => {
+          history.push('/match')
+        }}>
+          Play match
+        </li>
       </ul>
       <div className="user-widget-wrapper">
         <UserWidget />

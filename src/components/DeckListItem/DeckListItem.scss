@@ -7,4 +7,8 @@
   padding: 20px;
   border: 1px solid white;
   box-sizing: border-box;
+
+  &.selected {
+    border-color: green;
+  }
 }

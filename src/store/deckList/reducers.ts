@@ -4,13 +4,13 @@ import {
     SAVE_DECK,
     FETCH_DECKS,
     FETCH_DECK,
-    CLEAR_DECK
+    CLEAR_DECK,
+    SELECT_DECK
 } from './types'
 
 const initialState: DeckListState = {
     deckList: [],
-    count: 0,
-    // deck: {}
+    count: 0
 }
 
 export default (state = initialState, action: DeckListActionTypes) => {
@@ -31,7 +31,16 @@ export default (state = initialState, action: DeckListActionTypes) => {
                 deck: action.payload.data
             }
         case CLEAR_DECK: 
-            return initialState
+            const newState = {...state}
+
+            delete newState.deck
+
+            return newState
+        case SELECT_DECK:
+            return {
+                ...state,
+                selectedDeck: action.payload
+            }
         default: return state
     }
 }
