@@ -8,26 +8,29 @@ import { useDispatch } from 'react-redux'
 import { getLoggedUser } from './store/user/actions'
 import LoadingOverlay from './components/LoadingOverlay'
 import MatchBoard from './components/MatchBoard'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     dispatch(getLoggedUser())
   }, [dispatch])
 
   return (
-    <div className="App">
-      <LoadingOverlay />
-      <Router>
-        <Switch>
-          <Route path='/match' component={MatchBoard} />
-          <Route path='/dashboard' component={DashboardPage} />
-          <Route path='/register' component={RegisterPage}/>
-          <Route path='/' component={LoginPage} />
-        </Switch>
-      </Router>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <LoadingOverlay />
+        <Router>
+          <Switch>
+            <Route path='/match' component={MatchBoard} />
+            <Route path='/dashboard' component={DashboardPage} />
+            <Route path='/register' component={RegisterPage} />
+            <Route path='/' component={LoginPage} />
+          </Switch>
+        </Router>
+      </div>
+    </ErrorBoundary>
   );
 }
 

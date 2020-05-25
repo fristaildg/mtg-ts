@@ -12,11 +12,11 @@ import { mtgApiCall } from "../../lib/apiCall"
 export const fetchCards = (queryObj: MtgQueryObj, page?: number) => {
   return async (dispatch: any) => {
     dispatch(asyncActionCreator(FETCH_CARDS, PENDING))
-    try {
-      const response = await mtgApiCall("cards", queryObj, page)
+    const response = await mtgApiCall("cards", queryObj, page)
+    if (response.data) {
       dispatch(asyncActionCreator(FETCH_CARDS, SUCCESS, response))
-    } catch (err) {
-      dispatch(asyncActionCreator(FETCH_CARDS, REJECTED, err))
+    } else {
+      dispatch(asyncActionCreator(FETCH_CARDS, REJECTED, response))
     }
   }
 }

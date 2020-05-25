@@ -54,7 +54,7 @@ const DeckBuilderPage: React.FC = () => {
     if (deck) {
       setListing(deck.listing)
       setDeckName(deck.name)
-    }    
+    }
   }, [deck])
 
   const handleAddToDeck = (card: Card) => {
@@ -71,7 +71,7 @@ const DeckBuilderPage: React.FC = () => {
       const matchingCardIndex = listingIds.findIndex(item => newCard.id === item)
       const newListing = [...listing]
       const newCopy = listing[matchingCardIndex]
-      
+
       newCopy.amount = (newCopy.amount < 4 || newCopy.type.indexOf('Basic Land') !== -1) ? newCopy.amount + 1 : 4
       newListing[matchingCardIndex] = newCopy
 
@@ -87,7 +87,7 @@ const DeckBuilderPage: React.FC = () => {
       const matchingCardIndex = listingIds.findIndex(item => item === card.id)
       const newListing = [...listing]
       const newCopy = listing[matchingCardIndex]
-      
+
       newCopy.amount = card.amount - 1
       newListing[matchingCardIndex] = newCopy
 
@@ -121,4 +121,3 @@ const DeckBuilderPage: React.FC = () => {
 }
 
 export default DeckBuilderPage;
-  

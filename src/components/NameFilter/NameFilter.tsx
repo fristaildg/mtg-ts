@@ -18,7 +18,7 @@ const NameFilter = () => {
 
     const debounced = _.debounce(() => {
       setNameQuery(event.target.value)
-    }, 3000)
+    }, 1000)
 
     debounced()
   }

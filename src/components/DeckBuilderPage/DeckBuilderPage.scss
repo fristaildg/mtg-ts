@@ -2,6 +2,7 @@
     display: grid;
     grid-template-areas:    'pageHeader  deckHeader'
                             'cardList    deck';
+    grid-template-rows: 80px 1fr;
     grid-template-columns: 2fr 1fr;
     // grid-template-rows: 250px auto;
     height: 100%;

@@ -10,7 +10,7 @@ interface CardDetailProps {
   onPrevClick: () => void
 }
 
-const CardDetail: React.FC<CardDetailProps> = ({cardInfo, onCloseClick, onNextClick, onPrevClick}) => {
+const CardDetail: React.FC<CardDetailProps> = ({ cardInfo, onCloseClick, onNextClick, onPrevClick }) => {
   const {
     name,
     mana_cost,
@@ -18,6 +18,8 @@ const CardDetail: React.FC<CardDetailProps> = ({cardInfo, onCloseClick, onNextCl
     set_name,
     image_uris
   } = cardInfo
+
+  if (!cardInfo) return null
 
   return (
     <div className="card-detail">
@@ -27,7 +29,7 @@ const CardDetail: React.FC<CardDetailProps> = ({cardInfo, onCloseClick, onNextCl
         className="card-detail-image"
       />
       <div className="card-detail-info">
-        <div className="card-detail-header">          
+        <div className="card-detail-header">
           <span className='prev-button'
             onClick={onPrevClick}
           >
@@ -62,4 +64,3 @@ const CardDetail: React.FC<CardDetailProps> = ({cardInfo, onCloseClick, onNextCl
 }
 
 export default CardDetail
-  

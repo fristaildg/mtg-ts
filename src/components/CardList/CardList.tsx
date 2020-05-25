@@ -19,21 +19,29 @@ interface RootState {
   CardListReducer: {
     currentPage: number,
     filters: Filter
+  },
+  PendingState: {
+    FETCH_CARDS: {
+      isLoading: boolean
+    }
   }
 }
 
-const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
+const CardList: React.FC<CardListProps> = ({ cardList, onAddCard }) => {
   const dispatch = useDispatch()
   const currentPage = useSelector((state: RootState) => state.CardListReducer.currentPage)
   const queryObj = useSelector((state: RootState) => state.CardListReducer.filters)
   const [showDetail, setShowDetail] = useState(false)
-  const [currentCard, setCurrentCard] = useState(cardList[0])
+  const [currentCard, setCurrentCard] = useState(cardList && cardList[0])
+  const fetchCardsStatus = useSelector((state: RootState) => state.PendingState.FETCH_CARDS)
 
   useEffect(() => {
     if (!_.isEmpty(queryObj)) {
       dispatch(fetchCards(queryObj, currentPage))
     }
   }, [dispatch, currentPage, queryObj])
+
+  const cardListLoading = fetchCardsStatus && fetchCardsStatus.isLoading
 
   const handleViewCardClick = (card: Card) => {
     setCurrentCard(card)
@@ -73,14 +81,26 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
     <React.Fragment>
       <CardListFilters />
       <ul className='card-list'>
-        {cardList.map(card => (
-          <CardListItem
-            key={card.id}
-            card={card}
-            onViewCard={handleViewCardClick}
-            onAddCard={handleAddCardClick}
-          />
-        ))}
+        {cardListLoading ? (
+          <p>
+            Loading cards...
+          </p>
+        ) : (
+            <React.Fragment>
+              {cardList.length > 0 ? cardList.map(card => (
+                <CardListItem
+                  key={card.id}
+                  card={card}
+                  onViewCard={handleViewCardClick}
+                  onAddCard={handleAddCardClick}
+                />
+              )) : (
+                  <p>
+                    No cards found :(
+                  </p>
+                )}
+            </React.Fragment>
+          )}
       </ul>
       {showDetail && (
         <CardDetail cardInfo={currentCard}
@@ -95,4 +115,3 @@ const CardList: React.FC<CardListProps> = ({cardList, onAddCard}) => {
 }
 
 export default CardList
-  

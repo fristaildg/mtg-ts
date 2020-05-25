@@ -20,10 +20,17 @@ export default (state = initialState, action: CardListActionTypes) => {
         cardList: action.payload.data,
         hasMore: action.payload.has_more
       }
+    case `${FETCH_CARDS}_REJECTED`:
+      return {
+        ...state,
+        cardList: [],
+        hasMore: false,
+        errorMessage: action.payload.err.message
+      }
     case SET_FILTER:
       return {
         ...state,
-        filters: {...state.filters, ...action.payload},
+        filters: { ...state.filters, ...action.payload },
         currentPage: 1
       }
     case SET_PAGE:
@@ -31,7 +38,7 @@ export default (state = initialState, action: CardListActionTypes) => {
         ...state,
         currentPage: action.payload
       }
-    default: 
+    default:
       return state
   }
 }

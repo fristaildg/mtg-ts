@@ -74,7 +74,6 @@ export const mtgApiCall = async (
 ) => {
   try {
     let response: Response
-    console.log(queryObj)
     if (queryObj && !_.isEmpty(queryObj)) {
       if (queryObj.name) {
         response = await fetch(
@@ -97,6 +96,9 @@ export const mtgApiCall = async (
 
     return await response.json()
   } catch (err) {
-    console.log(err)
+    return {
+      err,
+      message: 'there was an error while fetching the cards'
+    }
   }
 }
