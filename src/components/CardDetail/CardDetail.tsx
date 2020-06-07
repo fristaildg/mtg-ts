@@ -1,14 +1,7 @@
 import React from 'react'
-import { Card } from '../../store/cardList/types'
+import { CardDetailProps } from './types'
 
 import './CardDetail.scss'
-
-interface CardDetailProps {
-  cardInfo: Card,
-  onCloseClick: () => void
-  onNextClick: () => void
-  onPrevClick: () => void
-}
 
 const CardDetail: React.FC<CardDetailProps> = ({ cardInfo, onCloseClick, onNextClick, onPrevClick }) => {
   const {

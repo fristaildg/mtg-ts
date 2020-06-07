@@ -1,15 +1,10 @@
 import React from 'react'
-import { DeckWithId } from '../../store/deckList/types'
 import DeckListItem from '../DeckListItem'
 import DeckListItemNew from '../DeckListItemNew'
-
 import './DeckList.scss'
+import { DeckListProps } from './types'
 
-interface DeckListProps {
-  list: DeckWithId[]
-}
-
-const DeckList: React.FC<DeckListProps> = ({list}) => {
+const DeckList: React.FC<DeckListProps> = ({ list }) => {
   return (
     <div className="decklist">
       {list.length > 0 && list.map(deck => (
@@ -18,7 +13,7 @@ const DeckList: React.FC<DeckListProps> = ({list}) => {
           deck={deck}
         />
       ))}
-      <DeckListItemNew />      
+      <DeckListItemNew />
     </div>
   )
 }

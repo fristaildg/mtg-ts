@@ -7,6 +7,7 @@ export const saveDeck = (deckObj: Deck) => {
     return async (dispatch: any) => {
         dispatch(asyncActionCreator(SAVE_DECK, PENDING))
         try {
+            console.log(deckObj)
             const response = await apiCall('decks', POST, deckObj)
             dispatch(asyncActionCreator(SAVE_DECK, SUCCESS, response))
         } catch (err) {
@@ -34,7 +35,7 @@ export const getDecks = () => {
     return async (dispatch: any) => {
         dispatch(asyncActionCreator(FETCH_DECKS, PENDING))
         try {
-            const response = await apiCall('decks', GET)
+            const response = await apiCall('decks', POST, { user: 'fristaildg@gmail.com' })
             dispatch(asyncActionCreator(FETCH_DECKS, SUCCESS, response))
         } catch (err) {
             dispatch(asyncActionCreator(FETCH_DECKS, REJECTED, err))

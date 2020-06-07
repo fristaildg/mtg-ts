@@ -7,7 +7,8 @@ export interface ListingItem {
 
 export interface Deck {
     name: string,
-    listing: ListingItem[]
+    listing: ListingItem[],
+    user: string
 }
 
 export interface DeckWithId extends Deck {

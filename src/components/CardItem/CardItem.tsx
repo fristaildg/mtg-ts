@@ -1,22 +1,16 @@
 import React from 'react'
-import { Card } from '../../store/cardList/types'
+import { CardItemProps } from './types'
 
-interface CardItemProps {
-  card: Card,
-  // onCardClick: () => void
-}
-
-const CardItem: React.FC<CardItemProps> = ({card}) => {
+const CardItem: React.FC<CardItemProps> = ({ card }) => {
   return (
     <img
       className='card-image thumb'
       src={card.image_uris && card.image_uris.small}
       alt={card.name}
       title={card.name}
-      // onClick={onCardClick}
+    // onClick={onCardClick}
     />
   )
 }
 
 export default CardItem
-  

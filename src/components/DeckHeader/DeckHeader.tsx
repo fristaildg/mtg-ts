@@ -1,31 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { saveDeck, updateDeck, deleteDeck } from '../../store/deckList/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { ListingItem } from '../../store/deckList/types'
 import { useHistory } from 'react-router-dom'
-// import _ from 'lodash'
+import { DeckHeaderProps, RootState } from './types'
+import { useAuth0 } from '../../contexts/auth0-context'
 
-interface DeckHeaderProps {
-  deck: {
-    listing: ListingItem[]
-    _id?: string
-    name?: string
-  }
-}
-
-interface RootState {
-  PendingState: {
-    DELETE_DECK: {
-      isLoading: boolean
-    }
-  }
-}
-
-const DeckHeader: React.FC<DeckHeaderProps> = ({deck}) => {
+const DeckHeader: React.FC<DeckHeaderProps> = ({ deck }) => {
   const [deckName, setDeckName] = useState('')
   const dispatch = useDispatch()
   const history = useHistory()
   const deleteStatus = useSelector((state: RootState) => state.PendingState.DELETE_DECK)
+  const { user } = useAuth0()
 
   useEffect(() => {
     if (deck.name) {
@@ -49,7 +34,8 @@ const DeckHeader: React.FC<DeckHeaderProps> = ({deck}) => {
         event.preventDefault()
         const deckObj = {
           name: deckName,
-          listing: deck.listing
+          listing: deck.listing,
+          user: user.email
         }
 
         if (!deck._id) {
@@ -85,4 +71,3 @@ const DeckHeader: React.FC<DeckHeaderProps> = ({deck}) => {
 
 export default DeckHeader
 
-  

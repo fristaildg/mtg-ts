@@ -2,13 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDecks } from '../../store/deckList/actions'
 import DeckList from '../DeckList'
-import { DeckListState } from '../../store/deckList/types'
-
 import './DecksPage.scss'
-
-interface RootState {
-  DeckListReducer: DeckListState
-}
+import { RootState } from './types'
 
 const DecksPage: React.FC = () => {
   const dispatch = useDispatch()
@@ -21,7 +16,7 @@ const DecksPage: React.FC = () => {
   return (
     <div className="decks-page">
       <h2>My decks</h2>
-      <DeckList list={deckList}/>
+      <DeckList list={deckList} />
     </div>
   )
 }

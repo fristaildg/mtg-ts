@@ -1,27 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-
 import './LoadingOverlay.scss'
-
-interface RootState {
-  PendingState: {
-    SAVE_DECK: {
-      isLoading: boolean
-    },
-    UPDATE_DECK: {
-      isLoading: boolean
-    },
-    DELETE_DECK: {
-      isLoading: boolean
-    },
-    // FETCH_CARDS: {
-    //   isLoading: boolean
-    // },
-    FETCH_DECK: {
-      isLoading: boolean
-    }
-  }
-}
+import { RootState } from './types'
 
 const LoadingOverlay: React.FC = () => {
   const saveDeckStatus = useSelector((state: RootState) => state.PendingState.SAVE_DECK)

@@ -1,31 +1,24 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { User } from '../../store/user/types'
 import { logout } from '../../store/user/actions'
 import _ from 'lodash'
 import { removeUserToken } from '../../lib/userToken'
-
 import './UserWidget.scss'
-
-interface RootState {
-  UserReducer: {
-    user: User
-  }
-}
+import { RootState } from './types'
+import { useAuth0 } from '../../contexts/auth0-context'
 
 const UserWidget: React.FC = () => {
-  const user = useSelector((state: RootState) => state.UserReducer.user)
-  const dispatch = useDispatch()
+  // const user = useSelector((state: RootState) => state.UserReducer.user)
+  // const dispatch = useDispatch()
+  const { user, logout } = useAuth0()
 
   const handleLogoutClick = () => {
-    dispatch(logout())
-    if (_.isEmpty(user)) {
-      removeUserToken()
-    }
+    logout()
   }
 
   return (
     <div className="user-widget">
+      <img src={user.picture} alt={user.name} className='user-widget-image' />
       <span className='user-widget-name'>
         {user.name}
       </span>
@@ -40,4 +33,3 @@ const UserWidget: React.FC = () => {
 }
 
 export default UserWidget
-  

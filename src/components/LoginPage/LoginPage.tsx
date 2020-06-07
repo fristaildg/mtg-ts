@@ -2,16 +2,9 @@ import React, { useEffect } from 'react'
 import LoginForm from '../LoginForm'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { User } from '../../store/user/types'
 import _ from 'lodash'
-
 import './LoginPage.scss'
-
-interface RootState {
-  UserReducer: {
-    user: User
-  }
-}
+import { RootState } from './types'
 
 const LoginPage: React.FC = () => {
   const history = useHistory()

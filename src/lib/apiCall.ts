@@ -36,9 +36,9 @@ export const apiCall = async (
     headers,
   }
 
-  if (method === POST || method === PUT) {
-    config.body = JSON.stringify(body)
-  }
+  // if (method === POST || method === PUT) {
+  config.body = JSON.stringify(body)
+  // }
 
   const response = await fetch(`${API_ROOT}/${endpoint}`, config)
 

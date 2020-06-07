@@ -1,14 +1,10 @@
 import React from 'react'
 import { ListingItem } from '../../store/deckList/types'
+import { DeckProps } from './types'
 
 import './Deck.scss'
 
-interface DeckProps {
-  listing: ListingItem[],
-  onRemoveCard: (item: ListingItem) => void
-}
-
-const Deck: React.FC<DeckProps> = ({listing, onRemoveCard}) => {
+const Deck: React.FC<DeckProps> = ({ listing, onRemoveCard }) => {
   return (
     <div className="deck">
       <ul className="listing">

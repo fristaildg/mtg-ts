@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Filter } from '../../store/cardList/types'
+import { Card } from '../../store/cardList/types'
 import CardDetail from '../CardDetail'
 
 import './CardList.scss'
@@ -9,23 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchCards } from '../../store/cardList/actions'
 import CardListItem from '../CardListItem'
 import _ from 'lodash'
-
-interface CardListProps {
-  cardList: Card[],
-  onAddCard: (card: Card) => void
-}
-
-interface RootState {
-  CardListReducer: {
-    currentPage: number,
-    filters: Filter
-  },
-  PendingState: {
-    FETCH_CARDS: {
-      isLoading: boolean
-    }
-  }
-}
+import { CardListProps, RootState } from './types'
 
 const CardList: React.FC<CardListProps> = ({ cardList, onAddCard }) => {
   const dispatch = useDispatch()

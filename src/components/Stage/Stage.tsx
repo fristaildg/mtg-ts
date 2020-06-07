@@ -1,12 +1,8 @@
 import React from 'react'
 import './Stage.scss'
+import { StageProps } from './types'
 
-interface StageProps {
-  children: React.ReactNode
-  className?: string
-}
-
-const Stage: React.FC<StageProps> = ({children, className}) => (
+const Stage: React.FC<StageProps> = ({ children, className }) => (
   <div className={`stage ${className}`}>
     {children}
   </div>
@@ -14,4 +10,3 @@ const Stage: React.FC<StageProps> = ({children, className}) => (
 
 export default Stage
 
-  

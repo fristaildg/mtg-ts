@@ -1,35 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card } from '../../store/cardList/types'
-import { ListingItem, DeckWithId } from '../../store/deckList/types'
+import { ListingItem } from '../../store/deckList/types'
 import CardList from '../CardList'
 import Deck from '../Deck'
 import DeckHeader from '../DeckHeader'
 import { useParams } from 'react-router-dom'
-
 import './DeckBuilderPage.scss'
 import { getDeckById, clearDeck } from '../../store/deckList/actions'
-
-interface RootState {
-  PendingState: {
-    FETCH_CARDS: {
-      isLoading: boolean
-    },
-    FETCH_DECK: {
-      isLoading: boolean
-    }
-  }
-  CardListReducer: {
-    cardList: Card[],
-    isLoading: boolean
-  }
-  DeckListReducer: {
-    deck: DeckWithId,
-    isLoading: boolean
-  }
-}
-
-type Listing = ListingItem[] | []
+import { RootState, Listing } from './types'
 
 const DeckBuilderPage: React.FC = () => {
   const cardList = useSelector((state: RootState) => state.CardListReducer.cardList)

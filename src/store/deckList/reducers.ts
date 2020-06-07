@@ -15,7 +15,7 @@ const initialState: DeckListState = {
 
 export default (state = initialState, action: DeckListActionTypes) => {
     switch (action.type) {
-        case `${SAVE_DECK}_SUCCESS`: 
+        case `${SAVE_DECK}_SUCCESS`:
             return {
                 ...state
             }
@@ -25,13 +25,18 @@ export default (state = initialState, action: DeckListActionTypes) => {
                 count: action.payload.count,
                 deckList: action.payload.data
             }
-        case `${FETCH_DECK}_SUCCESS`: 
+        case `${FETCH_DECKS}_REJECTED`:
+            return {
+                ...state,
+                message: action.payload.message
+            }
+        case `${FETCH_DECK}_SUCCESS`:
             return {
                 ...state,
                 deck: action.payload.data
             }
-        case CLEAR_DECK: 
-            const newState = {...state}
+        case CLEAR_DECK:
+            const newState = { ...state }
 
             delete newState.deck
 
