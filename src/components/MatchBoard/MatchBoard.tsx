@@ -1,12 +1,15 @@
 import React from 'react'
+import UserSide from './UserSide'
+import './MatchBoard.scss'
+import RivalSide from './RivalSide'
 
 const MatchBoard = () => {
   return (
-    <h1>
-      MatchBoard
-    </h1>
+    <div className='match-board'>
+      <RivalSide />
+      <UserSide />
+    </div>
   )
 }
 
 export default MatchBoard
-  

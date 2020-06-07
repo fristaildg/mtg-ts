@@ -1,0 +1,24 @@
+.user-side {
+  display: grid;
+  grid-template-areas:  '.          droparea  droparea'
+                        'deck       droparea  droparea'
+                        'graveyard  hand      hand';
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 2fr auto;
+
+  .board-deck {
+    grid-area: deck;
+  }
+
+  .graveyard {
+    grid-area: graveyard;
+  }
+
+  .hand {
+    grid-area: hand;
+  }
+
+  .drop-area {
+    grid-area: droparea;
+  }
+}
