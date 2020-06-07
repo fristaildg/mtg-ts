@@ -1,6 +1,7 @@
 import {
   POST,
   PUT,
+  GET,
   Method,
   Session,
   Body,
@@ -36,9 +37,16 @@ export const apiCall = async (
     headers,
   }
 
-  // if (method === POST || method === PUT) {
-  config.body = JSON.stringify(body)
-  // }
+  if (method === POST || method === PUT) {
+    config.body = JSON.stringify(body)
+  }
+
+  if (method === GET && !!body) {
+    const queryString = Object.keys(body)
+      .map(key => `${key}=${body[key]}`)
+      .join('&')
+    endpoint = `${endpoint}?${queryString}`
+  }
 
   const response = await fetch(`${API_ROOT}/${endpoint}`, config)
 
